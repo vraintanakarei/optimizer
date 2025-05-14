@@ -1,0 +1,100 @@
+# SPDX-License-Identifier: Apache-2.0
+
+[build-system]
+requires = ["setuptools>=42", "wheel", "cmake>=3.12", "pytest-runner"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "onnxoptimizer"
+version = "0.3.19"
+description = "Open Neural Network Exchange Optimizer"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "Apache License v2.0"}
+authors = [
+    {name = "ONNX Optimizer Authors", email = "onnx-technical-discuss@lists.lfai.foundation"}
+]
+maintainers = [
+    {name = "ONNX Optimizer Authors", email = "onnx-technical-discuss@lists.lfai.foundation"}
+]
+keywords = ["deep-learning", "ONNX"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["onnx"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "mypy==0.600"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/onnx/optimizer"
+"Bug Tracker" = "https://github.com/onnx/optimizer/issues"
+
+[project.scripts]
+onnxoptimizer = "onnxoptimizer:main"
+
+[tool.setuptools]
+packages = ["onnxoptimizer"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+onnxoptimizer = ["*.h", "*.c", "*.cc", "*.proto"]
+
+[tool.pytest]
+addopts = "--nbval --current-env"
+testpaths = ["onnxoptimizer/test/"]
+
+[tool.mypy]
+mypy_path = "stubs:third_party/onnx/third_party/pybind11"
+strict_optional = true
+warn_return_any = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_incomplete_stub = true
+check_untyped_defs = true
+disallow_any_generics = true
+no_implicit_optional = true
+disallow_untyped_decorators = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = "onnxoptimizer.*"
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "onnxoptimizer.onnx_opt_cpp2py_export"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "onnx.*"
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tools.*"
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "setup"
+ignore_errors = true
+
+[tool.flake8]
+select = ["B", "C", "E", "F", "P", "T4", "W", "B9"]
+max-line-length = 80
+ignore = ["E127", "E128", "E265", "E266", "E402", "E501", "E722", "F405", "P207", "P208", "W503", "F401"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build/*",
+    "third_party/*",
+    "*_pb2.py",
+    ".cache/*",
+    ".eggs",
+    ".setuptools-cmake-build/*"
+]
