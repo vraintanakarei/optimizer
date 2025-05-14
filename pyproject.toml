@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 [build-system]
-requires = ["setuptools>=42", "wheel", "cmake>=3.12", "pytest-runner"]
+requires = ["setuptools", "wheel", "cmake~=3.0", "pybind11", "pytest-runner"]
 build-backend = "setuptools.build_meta"
 
 [project]
