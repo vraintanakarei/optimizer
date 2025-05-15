@@ -7,7 +7,7 @@ jobs:
     env:
       CIBW_ARCHS_MACOS: x86_64 universal2
       CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
-      CIBW_BEFORE_ALL: pip install "cmake<4"
+      CIBW_BEFORE_BUILD: pip install "cmake<4"
       CIBW_TEST_REQUIRES_LINUX: pytest nbval flake8 mypy onnxruntime
       CIBW_TEST_REQUIRES_MACOS: pytest nbval
       CIBW_TEST_REQUIRES_WINDOWS: pytest nbval
