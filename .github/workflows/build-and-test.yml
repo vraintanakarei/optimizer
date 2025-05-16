@@ -30,7 +30,7 @@ jobs:
       run: python3 -m build --sdist
 
     - name: Install libraries
-      run:
+      run: |
         apt-get update
         apt-get install -y libprotobuf-dev
 
