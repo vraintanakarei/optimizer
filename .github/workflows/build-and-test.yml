@@ -29,6 +29,11 @@ jobs:
     - name: Build sdist
       run: python3 -m build --sdist
 
+    - name: Install libraries
+      run:
+        apt-get update
+        apt-get install -y libprotobuf-dev
+
     - name: Install and test sdist
       run: |
         # It's important to leave the project directory where a 'onnxoptimizer' subdirectory exists
