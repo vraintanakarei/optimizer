@@ -4,25 +4,6 @@ on: [push, pull_request]
 
 jobs:
   build_wheels:
-    env:
-      CIBW_ARCHS_MACOS: x86_64 universal2
-      CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
-      CIBW_BEFORE_ALL_LINUX: WD=`pwd`
-      CIBW_BEFORE_ALL_MACOS: WD=`pwd`
-      CIBW_TEST_REQUIRES_LINUX: pytest nbval flake8 mypy onnxruntime
-      CIBW_TEST_REQUIRES_MACOS: pytest nbval
-      CIBW_TEST_REQUIRES_WINDOWS: pytest nbval
-      CIBW_BEFORE_TEST_LINUX: pip install torch==1.13.1+cpu torchvision==0.14.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
-      CIBW_TEST_COMMAND: pytest {project}/onnxoptimizer/test
-      CIBW_TEST_COMMAND_LINUX: cd {project} && flake8 && pytest
-      # Python3.11 doesn't have torchvision prebuilt wheel
-      CIBW_TEST_SKIP: "cp311-* *_arm64 *_universal2:arm64"
-      CIBW_ENVIRONMENT: ONNX_OPT_USE_SYSTEM_PROTOBUF=1 CMAKE_ARGS="-DONNX_USE_PROTOBUF_SHARED_LIBS=ON"
-      CIBW_ENVIRONMENT_WINDOWS: USE_MSVC_STATIC_RUNTIME=0 ONNX_OPT_USE_SYSTEM_PROTOBUF=1 CMAKE_ARGS="-DONNX_USE_PROTOBUF_SHARED_LIBS=ON"
-      # Only build on Python 3 and skip 32-bit builds
-      CIBW_BUILD: "cp39-* cp310-* cp311-*"
-      # Skip python 3.6
-      CIBW_SKIP: "cp36-* *-win32 *-manylinux_i686 *-musllinux_*"
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
